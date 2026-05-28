@@ -16,8 +16,8 @@ const ratingSchema = new mongoose.Schema(
       max: 5,
     },
   },
-  { timestamps: true }
-)
+  { timestamps: true },
+);
 
 ratingSchema.index({ user: 1, store: 1 }, { unique: true });
 

@@ -1,5 +1,5 @@
 import User from "../models/user.model.js";
-import jwt from "jsonwebtoken"; 
+import jwt from "jsonwebtoken";
 const protect = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
@@ -12,10 +12,10 @@ const protect = async (req, res, next) => {
 
     req.user = await User.findById(decoded.id).select("-password");
 
-    next()
+    next();
   } catch (error) {
     res.status(401).json({ message: "Invalid token" });
   }
-}
+};
 
 export default protect;

@@ -8,6 +8,6 @@ const connectDB = async () => {
     console.log(error.message);
     // process.exit(1);
   }
-}
+};
 
-export default connectDB
+export default connectDB;

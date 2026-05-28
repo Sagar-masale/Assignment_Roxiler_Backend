@@ -2,15 +2,11 @@ import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
 import generateToken from "../utils/generateToken.js";
 
-
-
 export const signup = async (req, res) => {
   try {
-    const { name, email, address, password } =
-      req.body;
+    const { name, email, address, password } = req.body;
 
-    const passwordRegex =
-      /^(?=.*[A-Z])(?=.*[\W_]).{8,16}$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[\W_]).{8,16}$/;
 
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
@@ -19,8 +15,7 @@ export const signup = async (req, res) => {
       });
     }
 
-    const existingUser =
-      await User.findOne({ email });
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({
@@ -28,8 +23,7 @@ export const signup = async (req, res) => {
       });
     }
 
-    const hashedPassword =
-      await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
       name,
@@ -74,38 +68,31 @@ export const login = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-export const updatePassword =
-  async (req, res) => {
-    try {
-      const { password } = req.body
+export const updatePassword = async (req, res) => {
+  try {
+    const { password } = req.body;
 
-      const passwordRegex =
-        /^(?=.*[A-Z])(?=.*[\W_]).{8,16}$/
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[\W_]).{8,16}$/;
 
-      if (!passwordRegex.test(password)) {
-        return res.status(400).json({
-          message:
-            "Password must be 8-16 characters and include uppercase and special character",
-        })
-      }
-
-      const hashedPassword =
-        await bcrypt.hash(password, 10)
-
-      await User.findByIdAndUpdate(
-        req.user._id,
-        {
-          password: hashedPassword,
-        }
-      )
-
-      res.status(200).json({
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
         message:
-          "Password updated successfully",
-      })
-    } catch (error) {
-      res.status(500).json({
-        message: error.message,
-      })
+          "Password must be 8-16 characters and include uppercase and special character",
+      });
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await User.findByIdAndUpdate(req.user._id, {
+      password: hashedPassword,
+    });
+
+    res.status(200).json({
+      message: "Password updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
   }
+};

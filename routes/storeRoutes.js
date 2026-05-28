@@ -1,4 +1,4 @@
-import express from "express"
+import express from "express";
 import protect from "../middleware/authMiddleware.js";
 import { getStores } from "../controllers/storeController.js";
 

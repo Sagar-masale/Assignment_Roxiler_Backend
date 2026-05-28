@@ -1,20 +1,20 @@
-import express from "express"
+import express from "express";
 
-import protect from "../middleware/authMiddleware.js"
-import roleMiddleware from "../middleware/roleMiddleware.js"
+import protect from "../middleware/authMiddleware.js";
+import roleMiddleware from "../middleware/roleMiddleware.js";
 
 import {
   getOwnerDashboard,
   getOwnerRatings,
-} from "../controllers/ownerController.js"
+} from "../controllers/ownerController.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.use(protect)
-router.use(roleMiddleware("owner"))
+router.use(protect);
+router.use(roleMiddleware("owner"));
 
-router.get("/dashboard", getOwnerDashboard)
+router.get("/dashboard", getOwnerDashboard);
 
-router.get("/ratings", getOwnerRatings)
+router.get("/ratings", getOwnerRatings);
 
-export default router
+export default router;
