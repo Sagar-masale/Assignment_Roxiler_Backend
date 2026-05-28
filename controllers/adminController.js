@@ -71,6 +71,15 @@ export const createUser = async (req, res) => {
   try {
     const { name, email, address, password, role } = req.body;
 
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[\W_]).{8,16}$/;
+
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        message:
+          "Password must be 8-16 characters and include one uppercase letter and one special character",
+      });
+    }
+
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
